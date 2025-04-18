@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Mulish";
+            padding: 0;
+            margin: 0;
+        }
+
+        #quiz_img {
+            width: 100px;
+        }
+
+        #quiz_title {
+            font-size: 30px;
+            margin-left: 10px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        #quiz_desc, #quiz_author {
+            display: block;
+            margin-left: 15px;
+        }
+
+        .title-container {
+            display: flex;
+            padding: 15px;
+            padding-bottom: 5px;
+        }
+
+        .question-number {
+            color: white;
+            font-family: verdana;
+            border-radius: 50px;
+            margin-right: 12px;
+            width: 30px;
+            font-size: 20px;
+            margin-left: 28px;
+            height: 29px;
+            padding: 10px;
+            padding-top: 12px;
+            text-align: center;
+            display: inline-block;
+            background-color: #FF64C3;
+            font-weight: bold;
+        }
+
+      
+  
+
+    .question-text {
+        font-weight: 600;
+        font-size: 20px;
+        word-wrap: break-word; 
+    }
+
+
+
+        .questions-grid-container {
+            padding: 10px;
+        }
+
+        .question-container {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .question-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .question-text {
+        font-weight: 600;
+        font-size: 20px;
+        word-wrap: break-word;
+    }
+
+    .options-container {
+        padding: 10px;
+        padding-left: 0; 
+        padding-top: 5px;
+        display: flex; 
+        align-items: flex-start; 
+    }
+
+    .option {
+        font-size: 24px;
+        font-weight: 800;
+        color: #37B6FF;
+        cursor: default;
+        display: inline-block;
+        padding: 10px;
+        padding-top: 0px;
+        margin-right: 10px;
+    }
+
+        
+    </style>
+</head>
+<body>
+
+    <div class="title-container">
+        <img src="shapes.png" id="quiz_img">
+        <div class="author-title">
+            <span id="quiz_title">Loading Quiz Title</span>
+            <span id="quiz_author">By Jamesy Creator</span>
+            <span id="quiz_desc">Loading description</span>
+        </div>
+    </div>
+
+    <div class="questions-grid-container" id="grid"></div>
+
+ <script src="config.js"></script>
+
+    <script>
+       
+
+      
+
+       function setUpQuestions() {
+        var grid = document.getElementById("grid");
+
+        questions.forEach((question, index) => {
+            var questionContainer = document.createElement("div");
+            questionContainer.classList.add("question-container");
+
+            var questionNumber = document.createElement("span");
+            questionNumber.classList.add("question-number");
+            questionNumber.textContent = index + 1;
+
+            var questionContent = document.createElement("div"); 
+            questionContent.classList.add("question-content");
+
+            var questionText = document.createElement("span");
+            questionText.classList.add("question-text");
+            questionText.textContent = question.text;
+
+            var optionsContainer = document.createElement("div");
+            optionsContainer.classList.add("options-container");
+
+            question.options.forEach((_, optionIndex) => {
+                var optionElement = document.createElement("span");
+                optionElement.classList.add("option");
+                optionElement.textContent = String.fromCharCode(65 + optionIndex);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            questionContent.appendChild(questionText);
+            questionContent.appendChild(optionsContainer); 
+
+            questionContainer.appendChild(questionNumber);
+            questionContainer.appendChild(questionContent); 
+
+            grid.appendChild(questionContainer);
+        });
+    }
+
+
+
+        function setupWorksheet() {
+            var quiz_title_element = document.getElementById("quiz_title");
+            var quiz_description_element = document.getElementById("quiz_desc");
+            var quiz_img_url_element = document.getElementById("quiz_img");
+            var quiz_author_element = document.getElementById("quiz_author");
+
+            document.title = quiz_name;
+            quiz_author_element.textContent = "By " + quiz_author;
+            quiz_title_element.textContent = quiz_name;
+            quiz_description_element.textContent = quiz_description;
+            quiz_img_url_element.src = quiz_image_url;
+        }
+
+        setupWorksheet();
+        setUpQuestions();
+    </script>
+
+</body>
+</html>
