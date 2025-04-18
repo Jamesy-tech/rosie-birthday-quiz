@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<title>Loading...</title>
+<style>
+body {
+    font-family: "Montserrat";
+}
+.normal-button {
+    background: #011E41;
+    color: white;
+    font-family: "Montserrat";
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 13px;
+}
+.middle-of-page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    text-align: center;
+}
+.big-button {
+    min-width: 200px;
+
+    height: 50px;
+    font-size: 18px;
+}
+.title-heading {
+    font-size: 40px;
+    font-weight: bold;
+}
+.bottom-right {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.bottom-left {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#quiz-screen {
+    display: none;
+}
+.nav-title {
+    font-size: 18px;
+}
+.fontsize18 {
+    font-size: 18px;
+}
+.montserrat {
+    font-family: "Montserrat";
+}
+.question {
+    font-size: 40px;
+    display: block;
+    width: 500px;
+    text-align: center;
+}
+.options-container {
+   
+  
+    margin-top: 20px;
+}
+.option {
+    padding: 15px 20px;
+    width: 400px;
+    background: #011E41;
+    color: white;
+    margin-bottom:10px;
+    display:block;
+    border-radius: 10px;
+    font-size: 28px;
+    font-family: "Montserrat";
+    text-align: left;
+    pointer-events: none;
+    user-select: none;
+}
+.correct {
+    background: #28a745;
+}
+.incorrect {
+    background: #dc3545;
+}
+.answer-reveal {
+    font-size: 20px;
+    margin-top: 20px;
+    color: green;
+    font-weight: bold;
+}
+#finish-screen {
+    display: none;
+}
+.finish-image {
+    width: 300px;
+}
+.quiz-image {
+    width: 300px;
+}
+#amount-of-questions {
+    display: inline-block;
+    margin: 10px;
+}
+#answer-screen {
+    display: none;
+    text-align: left;
+}
+#table-container {
+    width: 100%; /* Corrected: Use 100% width for centering */
+    margin: 0 auto;
+    overflow-x: auto; /* Keep horizontal scroll if needed */
+}
+
+table {
+    width: 100%; /* Table fills its container */
+    border-collapse: collapse;
+    table-layout: fixed; /* Important for equal distribution */
+    font-size:22px;
+    font-weight:bold;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Adjust column widths to make the table wider */
+th:nth-child(1), td:nth-child(1) {
+    width: 20%; /* Question # column */
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 80%; /* Answer column */
+}
+
+
+
+/* Responsive adjustments if needed */
+@media (max-width: 600px) {
+    #table-container {
+        overflow-x: auto;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr { border: 1px solid #ccc; }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-column);
+        font-weight: bold;
+    }
+}
+
+.watermark {
+    opacity: 0.5;
+    width:150px;
+    border-radius:15px;
+}
+
+
+.end-button {
+    margin:8px;
+}
+
+
+</style>
+</head>
+<body>
+    <div id="starting-screen">
+        <div class="middle-of-page">
+            <img id="quiz-image" class="quiz-image"><br>
+            <span class="title-heading title" title>Loading quiz name...</span><br>
+            <span id="amount-of-questions"></span><br>
+            <span id="description" style="font-size:24px;"></span><br><br>
+            <button onclick="startQuiz()" class="normal-button big-button">Start Quiz</button>
+        </div>
+    </div>
+    <div id="quiz-screen">
+        &nbsp;&nbsp;&nbsp; <span class="nav-title title" id="quiz-title">Loading quiz name...</span> &nbsp;&nbsp; 
+        <span id="current-question" class="fontsize18 montserrat"></span>
+        <hr>
+        <div class="middle-of-page">
+        
+      <center>     <span id="question" style="padding:15px;" class="question montserrat">Loading question...</span>
+          
+                <div id="optionA" class="option">A. </div>
+                <div id="optionB" class="option">B. </div>
+                <div id="optionC" class="option">C. </div>
+            
+            </center>
+            
+        </div>
+        
+        
+        <button onclick="next()" class="normal-button bottom-right big-button">Next</button>
+        
+    </div>
+    <div id="finish-screen">
+        <div class="middle-of-page">
+            <img src="" id="end-quiz-image" class="finish-image"><br>
+            <span class="question montserrat">Quiz Complete!</span>
+            <span style="font-size:24px;" id="end-description">Made with Jamesy Creator</span><br><br>
+            <button onclick="showAnswers()" class="normal-button big-button end-button">Show Answers</button>  <button onclick="replayQuiz()" class="normal-button end-button big-button end-button">Replay Quiz</button> <button onclick="window.close()" class="normal-button big-button">Exit Quiz</button>
+        </div>
+    </div>
+    <div id="answer-screen">
+     <center>
+        <br><br>
+            <span class="title-heading">Answers</span><br><br>
+            <div id="table-container">  <table id="answers-table">
+                    <thead>
+                        <tr>
+                            <th>Question #</th>
+                            <th>Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <br>
+            <button onclick="endScreen()" class="normal-button big-button">Back</button>
+    </center>
+    </div>
+
+
+    <img src="images/jamesy_creator_banner.png" class="bottom-left watermark">
+
+
+    <script src="config.js"></script>
+
+    <script>
+        function setupQuiz() {
+            document.querySelectorAll('.title').forEach(el => el.textContent = quiz_name);
+            document.getElementById("quiz-image").src = quiz_image_url;
+            document.getElementById("end-quiz-image").src = quiz_end_image_url;
+            document.getElementById("description").textContent = quiz_description;
+            document.getElementById("end-description").textContent = quiz_end_description;
+            document.title = quiz_name;
+        }
+        setupQuiz();
+        var currentquestion = 0;
+        var question = document.getElementById("question");
+        var questionCounter = document.getElementById("current-question");
+        var optionA = document.getElementById("optionA");
+        var optionB = document.getElementById("optionB");
+        var optionC = document.getElementById("optionC");
+       
+        function replayQuiz() {
+            location.reload();
+        }
+        function startQuiz() {
+            document.getElementById("starting-screen").style.display = "none";
+            document.getElementById("quiz-screen").style.display = "block";
+            loadQuestion();
+        }
+
+        function endScreen() {
+            document.getElementById("quiz-screen").style.display = "none";
+            document.getElementById("starting-screen").style.display = "none";
+            document.getElementById("answer-screen").style.display = "none";
+                document.getElementById("finish-screen").style.display = "block";
+                questionCounter.textContent = questions.length + "/" + questions.length;
+                document.querySelector(".options-container").style.display = "none";
+                document.querySelector(".bottom-right").style.display = "none";
+
+        }
+
+        function loadQuestion() {
+            if (currentquestion < questions.length) {
+                const q = questions[currentquestion];
+                question.textContent = (currentquestion + 1) + ". " + q.text;
+                optionA.textContent = "A. " + q.options[0];
+                optionB.textContent = "B. " + q.options[1];
+                optionC.textContent = "C. " + q.options[2];
+                questionCounter.textContent = (currentquestion + 1) + "/" + questions.length;
+            } else {
+               endScreen()
+            }
+        }
+        function next() {
+            currentquestion += 1;
+            loadQuestion();
+        }
+        function showAnswers() {
+            document.getElementById("finish-screen").style.display = "none";
+            document.getElementById("answer-screen").style.display = "block";
+            var answersTableBody = document.querySelector("#answers-table tbody");
+            answersTableBody.innerHTML = ''; // Clear previous answers
+            questions.forEach(function (question, index) {
+                var row = document.createElement("tr");
+                var questionNumCell = document.createElement("td");
+                var answerCell = document.createElement("td");
+                questionNumCell.textContent = index + 1;
+                answerCell.textContent = question.correctAnswerLetter + ".  " + question.correctAnswer;
+                answerCell.setAttribute("data-column","Answer");
+                questionNumCell.setAttribute("data-column","Question #");
+                row.appendChild(questionNumCell);
+                row.appendChild(answerCell);
+                answersTableBody.appendChild(row);
+            });
+        }
+        const questionsAmount = questions.length;
+        document.getElementById("amount-of-questions").textContent = questionsAmount + " questions";
+    </script>
+</body>
+</html>
